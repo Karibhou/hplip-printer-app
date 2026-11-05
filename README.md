@@ -803,12 +803,17 @@ persistent state volume. No root privileges or install-time keyserver access
 are needed for verification. Snap uses its existing persistent `STATE_DIR`
 and the key inside the Snap.
 
-The OCI image and the Rock and Snap recipes already install Debian HPLIP's
-public key. Native
-packagers must also supply it; `HPLIP_SIGNING_KEY` and `HPLIP_APP_STATE_DIR` are
-Makefile overrides for nonstandard paths. The currently pinned primary
-fingerprint is `4ABA2F66DBD5A95894910E0673D770CDA59047B9`, as documented in
-[upstream's plugin verifier](https://github.com/OpenPrinting/hplip-printer-app/blob/master/hplip-printer-app.c).
+HP signed plugins up to HPLIP 3.25.2 with the 2009 key
+`4ABA2F66DBD5A95894910E0673D770CDA59047B9`, which Debian ships as
+`/usr/share/hplip/signing-key.asc`, and signs 3.25.6 and later with
+`82FFA7C6AA7411D934BDE173AC69536A2CF3A243`, the key upstream HPLIP 3.26.4's
+`base/validation.py` names. The Rock and Snap recipes (HPLIP 3.22.10) use
+Debian's key and the Makefile default pin. The OCI image (HPLIP 3.26.4) ships
+the newer key as
+`/usr/share/hplip-printer-app/hplip-plugin-signing-key-2025.asc` and pins its
+fingerprint. Native packagers must supply the key matching their HPLIP;
+`HPLIP_SIGNING_KEY`, `HPLIP_SIGNING_FINGERPRINT` and `HPLIP_APP_STATE_DIR` are
+Makefile overrides.
 An unrelated key in the persistent keyring cannot authorize a plugin. Missing
 keys, changed payloads/signatures, expired or revoked signatures/keys, and GPG
 errors fail closed before extraction and installation. User GPG configuration
