@@ -795,7 +795,9 @@ the files "LICENSE" and "NOTICE" for more information.
 ### HP plugin signature verification
 
 Plugin downloads are verified before the self-extracting archive is executed.
-The verifier imports the packaged `/usr/share/hplip/signing-key.asc` into
+The verifier imports the packaged HP signing key (`HPLIP_SIGNING_KEY`; the OCI
+image ships `/usr/share/hplip-printer-app/hplip-plugin-signing-key-2025.asc`,
+the Snap uses Debian's `/usr/share/hplip/signing-key.asc`) into
 `$STATE_DIR/plugin-gnupg` (default `/var/lib/hplip-printer-app/plugin-gnupg`).
 This directory must belong to the application's runtime UID and have mode
 0700. Its parent must already exist and be writable by that UID on the
@@ -830,9 +832,10 @@ python3 tests/test-plugin-verification.py
 To include official bytes already downloaded from HP's OpenPrinting mirror:
 
 ```sh
-HP_PLUGIN=/path/to/hplip-3.22.10-plugin.run \
-HP_PLUGIN_SIGNATURE=/path/to/hplip-3.22.10-plugin.run.asc \
-HP_SIGNING_KEY=/usr/share/hplip/signing-key.asc \
+HP_PLUGIN=/path/to/hplip-3.26.4-plugin.run \
+HP_PLUGIN_SIGNATURE=/path/to/hplip-3.26.4-plugin.run.asc \
+HP_SIGNING_KEY=files/hplip-plugin-signing-key-2025.asc \
+HP_SIGNING_FINGERPRINT=82FFA7C6AA7411D934BDE173AC69536A2CF3A243 \
 python3 tests/test-plugin-verification.py
 ```
 
