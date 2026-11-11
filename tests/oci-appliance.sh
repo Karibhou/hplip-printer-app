@@ -54,6 +54,7 @@ podman run --rm --entrypoint /usr/bin/bash "$image" -c '
   test -s /usr/share/ppd/hplip/HP/hp-color_laserjet-ps.ppd.gz
   test -s /usr/share/hplip-printer-app/testpage.pdf
   test -s /usr/share/hplip/signing-key.asc
+  test -s /usr/libexec/printer-app/entrypoint-common.sh
   test ! -e /var/lib/hplip-printer-app/plugin
   test ! -x /usr/bin/cupsd
   test ! -x /usr/bin/gcc
