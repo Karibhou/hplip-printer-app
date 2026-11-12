@@ -50,6 +50,7 @@ podman run --rm --entrypoint /usr/bin/bash "$image" -c '
     /usr/lib/cups/filter/hpcups /usr/lib/cups/filter/hpps; do
     [[ "$(ldd "$bin")" != *"not found"* ]]
   done
+  test -s /usr/libexec/printer-app/entrypoint-common.sh
   test -s /usr/share/ppd/hplip/HP/hp-deskjet_990c.ppd.gz
   test -s /usr/share/ppd/hplip/HP/hp-color_laserjet-ps.ppd.gz
   test -s /usr/share/hplip-printer-app/testpage.pdf
