@@ -80,6 +80,16 @@ podman exec "$name" /usr/bin/bash -c '
     --import -- /usr/share/hplip-printer-app/hplip-plugin-signing-key-2025.asc |
     grep "^\[GNUPG:\] IMPORT_OK [0-9]* 82FFA7C6AA7411D934BDE173AC69536A2CF3A243" >/dev/null
   rm -rf "$gnupg"
+  # Exercise the archive tools in the unprivileged runtime, not the build image.
+  mkdir -p /var/lib/hplip-printer-app/archive-smoke/source /var/lib/hplip-printer-app/archive-smoke/output
+  printf license > /var/lib/hplip-printer-app/archive-smoke/source/license.txt
+  printf library > /var/lib/hplip-printer-app/archive-smoke/source/lj-x86_64.so
+  tar -C /var/lib/hplip-printer-app/archive-smoke/source -czf /var/lib/hplip-printer-app/archive-smoke/plugin.tar.gz .
+  cd /var/lib/hplip-printer-app/archive-smoke/output
+  gzip -cd ../plugin.tar.gz | tar xf - --no-same-owner
+  test "$(cat license.txt)" = license
+  test "$(cat lj-x86_64.so)" = library
+  rm -rf /var/lib/hplip-printer-app/archive-smoke
   test -s /var/lib/hplip-printer-app/usb/org.cups.usb-quirks
 '
 

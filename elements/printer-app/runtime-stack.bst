@@ -22,5 +22,6 @@ depends:
   - fsdk-containers.bst:freedesktop-sdk.bst:components/python3-dbus.bst
   - fsdk-containers.bst:freedesktop-sdk.bst:components/python3-pil.bst
   - fsdk-containers.bst:freedesktop-sdk.bst:components/pygobject.bst
+  - fsdk-containers.bst:freedesktop-sdk.bst:components/tar.bst
   - fsdk-containers.bst:freedesktop-sdk.bst:components/which.bst
   - fsdk-containers.bst:freedesktop-sdk.bst:components/xz.bst
