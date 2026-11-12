@@ -807,6 +807,10 @@ This directory must belong to the application's runtime UID and have mode
 persistent state volume. No root privileges or install-time keyserver access
 are needed for verification. Snap uses its existing persistent `STATE_DIR`
 and the key inside the Snap.
+The OCI runtime includes GNU tar for extracting the verified archive. If tar
+is unavailable or extraction does not produce a nonempty license, installation
+stops before the license agreement is shown.
+
 
 HP signed plugins up to HPLIP 3.25.2 with the 2009 key
 `4ABA2F66DBD5A95894910E0673D770CDA59047B9`, which Debian ships as

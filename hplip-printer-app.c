@@ -947,9 +947,10 @@ hplip_download_plugin(pappl_system_t *system,
     goto out;
   }
 
-  // Uncompress the plugin
+  // Makeself's --tar mode exits successfully even when tar cannot run.
+  // Require tar and the extracted license before offering installation.
   snprintf(buf, sizeof(buf),
-	   "cd %s 2>&1 && mkdir plugin_tmp 2>&1 && cd plugin_tmp 2>&1 && sh %s --tar xf --no-same-owner 2>&1 && cd .. 2>&1 && chmod -R go+rX plugin_tmp 2>&1",
+	   "command -v tar >/dev/null 2>&1 && cd %s 2>&1 && mkdir plugin_tmp 2>&1 && cd plugin_tmp 2>&1 && sh %s --tar xf --no-same-owner 2>&1 && test -s license.txt && cd .. 2>&1 && chmod -R go+rX plugin_tmp 2>&1",
 	   uncompress_dir, plugin_file);
   papplLog(system, PAPPL_LOGLEVEL_DEBUG,
 	   "Uncompressing the plugin file.");
